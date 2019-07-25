@@ -34,7 +34,7 @@ function App() {
     return () => {
       // cleanup
     };
-  }, [sortedCollection]);
+  }, []);
 
   const saveAnnotation = (id, annotation) => {
     collection
