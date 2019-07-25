@@ -51,34 +51,35 @@ function App() {
   return (
     <div className="App" style={{ display: 'flex', flexWrap: 'wrap' }}>
       {user ? (
-        <div>
-          Logged in as {user.displayName}
-          <br />
-          <button onClick={() => firebase.auth().signOut()}>Logout</button>
-        </div>
+        <>
+          <div>
+            Logged in as {user.displayName}
+            <br />
+            <button onClick={() => firebase.auth().signOut()}>Logout</button>
+          </div>
+          <Box key="new" padding={2}>
+            <Annotation
+              id=""
+              date={format(new Date(), 'YYYY-MM-DD')}
+              handleSave={saveAnnotation}
+            />
+          </Box>
+          {annotations.map(annotation => (
+            <Box key={annotation.id} padding={2}>
+              <Annotation
+                id={annotation.id}
+                {...annotation}
+                handleSave={saveAnnotation}
+              />
+            </Box>
+          ))}
+        </>
       ) : (
         <StyledFirebaseAuth
           uiConfig={uiConfig}
           firebaseAuth={firebase.auth()}
         />
       )}
-
-      <Box key="new" padding={2}>
-        <Annotation
-          id=""
-          date={format(new Date(), 'YYYY-MM-DD')}
-          handleSave={saveAnnotation}
-        />
-      </Box>
-      {annotations.map(annotation => (
-        <Box key={annotation.id} padding={2}>
-          <Annotation
-            id={annotation.id}
-            {...annotation}
-            handleSave={saveAnnotation}
-          />
-        </Box>
-      ))}
     </div>
   );
 }
